@@ -1,0 +1,25 @@
+name: Run GreenBSN Smoke Test
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+
+
+jobs:
+  test:
+    run-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: action/checkout@v4
+
+      - name: Set up Java
+        uses: action/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: "17"
+
+      - name: Run JUnit tests with Maven
+        run: mvn -B test
