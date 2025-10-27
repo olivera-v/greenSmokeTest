@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run Maven tests
-        run: mvn clean test
+        run: mvn clean test -B
 
       - name: Upload Surefire reports
         uses: actions/upload-artifact@v4

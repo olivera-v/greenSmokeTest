@@ -11,50 +11,50 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import pages.BasePage;
 
 import java.time.Duration;
+import java.util.UUID;
+
 
 public class BaseTest {
 
+protected static WebDriver driver;
+protected static BasePage basePage;
+Faker faker = new Faker();
 
-    Faker faker = new Faker();
+@BeforeClass
+public static void beforeAll() {
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless=new"); // koristi novi headless
+    options.addArguments("--disable-gpu"); // preporučeno
+    options.addArguments("--remote-allow-origins=*");
 
+    // Jedinstveni profil za svaki test (radi na Windows i Linux)
+    String userDataDir = System.getProperty("java.io.tmpdir") + "chrome-" + UUID.randomUUID();
+    options.addArguments("--user-data-dir=" + userDataDir);
 
+    driver = new ChromeDriver(options);
+    driver.manage().window().maximize();
+    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+    driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
 
-    protected static WebDriver driver;
-    protected BasePage basePage = new BasePage(driver, Duration.ofSeconds(15));
+    basePage = new BasePage(driver, Duration.ofSeconds(15));
+}
 
+@Before
+public void beforeEach() {
+    basePage.navigateTo("https://greenbsn.com/sr/");
+}
 
-    @BeforeClass
-    public static void beforeAll() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new"); // ili samo --headless za starije verzije
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--user-data-dir=/tmp/chrome-${UUID.randomUUID()}"); // svaki put novi profil
+@After
+public void afterEach() {
+    driver.manage().deleteAllCookies();
+}
 
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-        driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
+@AfterClass
+public static void afterAll() {
+    if (driver != null) {
+        driver.quit();
     }
-
-    @Before
-    public void beforeEach() {
-        basePage.navigateTo("https://greenbsn.com/sr/");
-    }
-
-    @After
-    public void afterEach() {
-        driver.manage().deleteAllCookies();
-    }
-
-    @AfterClass
-    public static void afterAll() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-    }
+}
+}
 
 
