@@ -14,23 +14,23 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Install Google Chrome
-        uses: browser-actions/setup-chrome@v4
+        uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: 'latest'
 
       - name: Install ChromeDriver
-        uses: nanasess/setup-chromedriver@v4
+        uses: nanasess/setup-chromedriver@v1
         with:
           chromedriver-version: 'latest'
 
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: |
             ~/.m2/repository
