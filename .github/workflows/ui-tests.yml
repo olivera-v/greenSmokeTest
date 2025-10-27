@@ -2,8 +2,8 @@ name: Daily GreenBSN Smoke Tests
 
 on:
   schedule:
-    - cron: '0 5 * * *' # GitHub Actions koristi UTC, CET = UTC+1, pa 6:00 CET = 5:00 UTC
-  workflow_dispatch: # omogućava ručno pokretanje workflow-a
+    - cron: '0 5 * * *'
+  workflow_dispatch:
 
 jobs:
   selenium-tests:

@@ -23,14 +23,15 @@ Faker faker = new Faker();
 @BeforeClass
 public static void beforeAll() {
     ChromeOptions options = new ChromeOptions();
-    options.addArguments("--headless=new"); // koristi novi headless
-    options.addArguments("--disable-gpu"); // preporučeno
-    options.addArguments("--remote-allow-origins=*");
-
-    // Jedinstveni profil za svaki test (radi na Windows i Linux)
-    String userDataDir = System.getProperty("java.io.tmpdir") + "chrome-" + UUID.randomUUID();
-    options.addArguments("--user-data-dir=" + userDataDir);
-
+//    options.addArguments("--headless=new"); // koristi novi headless
+//    options.addArguments("--disable-gpu"); // preporučeno
+//    options.addArguments("--remote-allow-origins=*");
+//
+//    // Jedinstveni profil za svaki test (radi na Windows i Linux)
+//    String userDataDir = System.getProperty("java.io.tmpdir") + "chrome-" + UUID.randomUUID();
+//    options.addArguments("--user-data-dir=" + userDataDir);
+    options.addArguments("--headless");
+    options.addArguments("--window-size=1920,1080");
     driver = new ChromeDriver(options);
     driver.manage().window().maximize();
     driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
