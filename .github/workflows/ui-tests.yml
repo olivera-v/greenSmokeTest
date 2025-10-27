@@ -2,7 +2,7 @@ name: Daily GreenBSN Smoke Tests
 
 on:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: '0 5 * * *' # pokreće se svakog dana u 6:00 CET (05:00 UTC)
   workflow_dispatch:
 
 jobs:
@@ -32,14 +32,13 @@ jobs:
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.m2/repository
+          path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
       - name: Run Maven tests
-        run: mvn clean test -B
+        run: mvn clean test
 
       - name: Upload Surefire reports
         uses: actions/upload-artifact@v4
