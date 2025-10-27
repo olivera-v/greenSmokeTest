@@ -3,12 +3,16 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 import pages.ProizvodiPage;
 import pages.SunCareProductsPage;
 import pages.SunCareSPF15Page;
 
 import java.time.Duration;
+import java.util.List;
 
 public class ProductsAndColectionsTest extends BaseTest{
 
@@ -17,22 +21,6 @@ public class ProductsAndColectionsTest extends BaseTest{
     SunCareProductsPage sunCareProizvodiPage = new SunCareProductsPage(driver, Duration.ofSeconds(15));
     SunCareSPF15Page sunCareSPF15 = new SunCareSPF15Page(driver, Duration.ofSeconds(15));
 
-    @Test
-    public void navigateToProductsAndCheckColections () {
-        homePage.setLinkZaProizvode();
-        Assert.assertTrue(
-                driver.findElement(proizvodiPage.getNegaTela()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getGreenSana()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getGreenSpa()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getGreenSunCare()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getGreenUnique()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getHigijenaDoma()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getLicnaHigijena()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getMiniGreeny()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getNegaLica()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getNegaKose()).isDisplayed() &&
-                        driver.findElement(proizvodiPage.getOralnaHigijena()).isDisplayed());
-    }
 
     @Test
     public void navigateToProductsAndCheckColectionsTwo() {

@@ -1,25 +1,48 @@
-name: Run GreenBSN Smoke Test
+name: Daily GreenBSN Smoke Tests
 
 on:
   schedule:
-    - cron: '0 5 * * *'
-  workflow_dispatch:
-
-
+    - cron: '0 5 * * *' # GitHub Actions koristi UTC, CET = UTC+1, pa 6:00 CET = 5:00 UTC
+  workflow_dispatch: # omogućava ručno pokretanje workflow-a
 
 jobs:
-  test:
+  selenium-tests:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
         with:
+          java-version: '21'
           distribution: 'temurin'
-          java-version: "21"
 
-      - name: Run JUnit tests with Maven
-        run: mvn -B test
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: 'latest'
+
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v1
+        with:
+          chromedriver-version: 'latest'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Run Maven tests
+        run: mvn clean test
+
+      - name: Upload Surefire reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/

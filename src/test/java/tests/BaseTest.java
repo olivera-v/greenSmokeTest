@@ -7,25 +7,36 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import pages.BasePage;
 
 import java.time.Duration;
 
 public class BaseTest {
 
-    protected static WebDriver driver;
+
     Faker faker = new Faker();
 
-    BasePage basePage = new BasePage(driver, Duration.ofSeconds(15));
+
+
+    protected static WebDriver driver;
+    protected BasePage basePage = new BasePage(driver, Duration.ofSeconds(15));
+
 
     @BeforeClass
     public static void beforeAll() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new"); // ili samo --headless za starije verzije
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--user-data-dir=/tmp/chrome-${UUID.randomUUID()}"); // svaki put novi profil
+
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-//        max time to wait for a page load
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
-//        max time for asynchronous JS run
     }
 
     @Before
@@ -40,29 +51,10 @@ public class BaseTest {
 
     @AfterClass
     public static void afterAll() {
-        if(driver != null) {
+        if (driver != null) {
             driver.quit();
         }
     }
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}

@@ -10,15 +10,15 @@ public class HomePage extends BasePage{
     private By linkZaMojGreenKutak = By.xpath("//*[text()=\"Moj Green kutak\"]");
     private By linkZaPretragu= By.xpath("(//*[@class=\"qode_icon_font_elegant icon_search \"])[1]");
     private By linkZaBurgerMeni = By.xpath("//*[@class=\"popup_menu normal\"]");
-    private By linkZaGreen = By.xpath("//*[@id=\"nav-menu-item-61\"]");
+    private By linkZaGreen = By.cssSelector("a[href='https://greenbsn.com/sr/']");;
     private By linkZaOKompaniji = By.xpath("//a[@href='https://greenbsn.com/sr/green/vizija/']/span[text()='O kompaniji']");
     private By linkZaOProizvodima = By.xpath("//a[.//span[normalize-space()='O Green proizvodima']]");
-    private By linkZaSertifikate = By.xpath("//a[.//span[text()='Sertifikati']]");
+    private By linkZaSertifikate = By.cssSelector("a[href='https://greenbsn.com/sr/green/sertifikati/']");
     private By linkZaNovosti = By.id("nav-menu-item-2839");
     private By linkZaProizvode = By.id("nav-menu-item-892");
     private By linkZaDogadjajiAkcije = By.id("nav-menu-item-1343");
     private By linkZaCene = By.id("nav-menu-item-331");
-    private By linkZaKontakt = By.xpath("//a[@href='https://greenbsn.com/sr/mreza/']");
+    private By linkZaKontakt = By.xpath("//a[contains(@href,'/mreza')]//span[contains(text(),'Kontakt')]");
 
     public HomePage(WebDriver driver, Duration timeout) {
         super(driver, timeout);
@@ -69,12 +69,11 @@ public class HomePage extends BasePage{
     }
 
     public void setLinkZaProizvode(){
-        waitForVisible(linkZaProizvode).click();
+        clickElementUsingJS(linkZaProizvode);
     }
 
     public void setLinkZaKontakt (){
-        waitForVisible(linkZaKontakt).click();
-    }
+        clickElementUsingJS(linkZaKontakt);    }
 
     public void hoverLinkZaKontakt () {
         hover(linkZaKontakt);

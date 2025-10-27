@@ -3,6 +3,7 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
@@ -42,18 +43,24 @@ public class BasicFuncionalityTest extends BaseTest{
     @Test
     public void navigationToAboutProducts() {
         homePage.setLinkZaOProizvodima();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='O Green proizvodima']")));
-        Assert.assertTrue(driver.findElement(By.xpath("//span[text()='O Green proizvodima']")).isDisplayed());
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe("https://greenbsn.com/sr/green/o-green-proizvodima/"));
+        Assert.assertTrue("Nije otvorena stranica O proizvodima.",
+                driver.getCurrentUrl().endsWith("sr/green/o-green-proizvodima/")
+        );
     }
 
     @Test
     public void navigationToCertificates() {
         homePage.setLinkZaSertifikate();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Sertifikati']")));
-        Assert.assertTrue(driver.findElement(By.xpath("//span[text()='Sertifikati']")).isDisplayed());
-    }
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.urlToBe("https://greenbsn.com/sr/green/sertifikati/"));
+        Assert.assertTrue("Nije otvorena stranica Sertifikati.",
+                    driver.getCurrentUrl().endsWith("/sr/green/sertifikati/")
+            );
+        }
+
+
 
     @Test
     public void verifyHTTPSandSSL() throws Exception {
