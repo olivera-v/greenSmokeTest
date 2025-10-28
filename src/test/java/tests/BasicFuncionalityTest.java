@@ -105,7 +105,7 @@ public class BasicFuncionalityTest extends BaseTest{
     }
 
     @Test
-    public void successfulLogin(){
+    public void successfulLogin() throws InterruptedException {
         homePage.setLinkZaMojGreenKutak();
 
         // Prebacivanje na novi tab
@@ -124,6 +124,8 @@ public class BasicFuncionalityTest extends BaseTest{
                 currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
 
         mojGreenKutak.logovanje("1-0008826","olivera");
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe("https://my.greenbsn.com/myOrders.php"));
         Assert.assertEquals("Nismo na očekivanoj login stranici!",
                 "https://my.greenbsn.com/myOrders.php",
                 driver.getCurrentUrl());
