@@ -1,4 +1,4 @@
-name: 🧪 Daily GreenBSN Smoke Tests
+name: Daily GreenBSN Smoke Tests
 
 on:
   schedule:
@@ -10,24 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧾 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: ☕ Set up JDK 21
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: 🌐 Install Google Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v2
         with:
-          chrome-version: 'stable'
+          chrome-version: 'latest'
 
-      - name: 🚗 Install ChromeDriver
-        uses: nanasess/setup-chromedriver@v1
+      - name: Install matching ChromeDriver
+        uses: seleniumhq/setup-chromedriver@v1
+        with:
+          version: 'latest'
 
-      - name: 🧰 Cache Maven dependencies
+      - name: Cache Maven dependencies
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
@@ -35,29 +37,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: 🧪 Run Maven tests
+      - name: Run Maven tests
         run: mvn clean test || echo "TESTS_FAILED=true" >> $GITHUB_ENV
 
-      - name: 📜 Show failed test summary (if any)
+      - name: Show failed test summary (if any)
         if: env.TESTS_FAILED == 'true'
         run: |
-          echo "⚠️ Test failure detected! Showing failed tests:"
+          echo "Test failure detected. Showing failed tests:"
           echo "---------------------------------------------"
           grep -A5 -B2 '<<< FAILURE!' target/surefire-reports/*.txt || true
           echo
           grep -A5 -B2 '<<< ERROR!' target/surefire-reports/*.txt || true
 
-      - name: 📤 Upload Surefire reports
+      - name: Upload Surefire reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: surefire-reports
           path: target/surefire-reports/
-
-      - name: 🧾 Publish Maven Test Results (nice view)
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Maven Tests
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
