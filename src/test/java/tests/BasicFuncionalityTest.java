@@ -81,6 +81,9 @@ public class BasicFuncionalityTest extends BaseTest{
         driver.get("https://greenbsn.com/sr/");
         homePage.setLinkZaMojGreenKutak();
         homePage.switchToNewlyOpenedTab();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.numberOfWindowsToBe(2));
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
         mojGreenKutak.logovanje("nesto","nesto");
         Assert.assertTrue(driver.findElement(By.xpath("//input[@value='Prijava']")).isDisplayed());
 //        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
@@ -92,6 +95,9 @@ public class BasicFuncionalityTest extends BaseTest{
         driver.get("https://greenbsn.com/sr/");
         homePage.setLinkZaMojGreenKutak();
         homePage.switchToNewlyOpenedTab();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.numberOfWindowsToBe(2));
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
         mojGreenKutak.logovanje("1-0008826","olivera");
         Assert.assertTrue(driver.getCurrentUrl().contains("/myOrders.php"));
 //        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
