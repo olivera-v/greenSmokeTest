@@ -79,6 +79,8 @@ public class HomePage extends BasePage{
         hover(linkZaKontakt);
     }
 
+    public void hoverLinkZaProizvode () {hover(linkZaProizvode); }
+
     public void selectNSFromDropdownMenu () {
         openDropdownAndClick(linkZaKontakt, By.xpath("//span[text()='Diskont Novi Sad']"));
     }

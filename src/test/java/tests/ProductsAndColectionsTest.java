@@ -3,6 +3,7 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,7 +13,10 @@ import pages.SunCareProductsPage;
 import pages.SunCareSPF15Page;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductsAndColectionsTest extends BaseTest{
 
@@ -22,13 +26,48 @@ public class ProductsAndColectionsTest extends BaseTest{
     SunCareSPF15Page sunCareSPF15 = new SunCareSPF15Page(driver, Duration.ofSeconds(15));
 
 
-//    @Test
-//    public void navigateToProductsAndCheckColectionsTwo() {
-//        homePage.setLinkZaProizvode();
-//        Assert.assertTrue(proizvodiPage.colectionPresenceCheck("nega kose"));
-//        Assert.assertTrue(proizvodiPage.colectionPresenceCheck("mini greeny"));
-//
-//    }
+
+    @Test
+    public void navigateToProductsAndCheckColectionsThree() {
+        homePage.hoverLinkZaProizvode();
+        try {
+            Thread.sleep(500); // kratko čekanje da se meni otvori
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Svi <a> unutar li sa klasom product_cat
+        List<WebElement> items = driver.findElements(By.cssSelector("li.menu-item-object-product_cat > a"));
+
+        // Set za deduplikaciju URL-ova
+        Set<String> seenHrefs = new HashSet<>();
+        // Lista za imena kolekcija bez duplikata
+        List<String> uniqueNames = new ArrayList<>();
+
+        System.out.println("=== Spisak kolekcija ===");
+        for (WebElement item : items) {
+            String name = item.findElement(By.tagName("span")).getText();
+            String href = item.getAttribute("href");
+
+            if (href == null || href.isEmpty()) continue;
+
+            // Preskoči duplikate
+            if (seenHrefs.contains(href)) continue;
+            seenHrefs.add(href);
+            uniqueNames.add(name);
+
+            // Izdvajanje dela između poslednje dve kose crte
+            String lastPart = "";
+            String[] parts = href.split("/");
+            lastPart = parts[parts.length - 1].isEmpty() ? parts[parts.length - 2] : parts[parts.length - 1];
+
+            System.out.println(name + " -> " + lastPart);
+        }
+        System.out.println("=== Kraj spiska ===");
+
+        // Asertacija da ima tačno 10 jedinstvenih kolekcija
+        Assert.assertTrue("Lista kolekcija nema tačno 10 proizvoda!", uniqueNames.size() == 10);
+    }
 
     @Test
     public void bodyCareColectionLaunc() {

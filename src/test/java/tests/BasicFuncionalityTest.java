@@ -98,7 +98,7 @@ public class BasicFuncionalityTest extends BaseTest{
         // Logovanje sa neispravnim kredencijalima
         mojGreenKutak.logovanje("nesto", "nesto");
 
-        // ASSERT: dugme Prijava je prikazano
+        // ASSERT: Polje Username je prikazano
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
             driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
 
