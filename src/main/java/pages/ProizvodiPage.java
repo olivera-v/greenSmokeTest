@@ -22,8 +22,8 @@ public class ProizvodiPage extends BasePage {
         private By greenSunCare = By.xpath("//a[@href='https://greenbsn.com/sr/kolekcija/sun-care/']//span[normalize-space()='Green SUN CARE']");
         private By higijenaDoma = By.xpath("//a[contains(@aria-label, \"Posetite kategoriju proizvoda [:sr]Higijena doma[:en]Household Care[:]\")]/img");
         private By greenSana = By.xpath("//a[contains(@aria-label, \"Posetite kategoriju proizvoda Green SANA+\")]/img");
-        private By kolekcije = By.cssSelector(".product-category");
-        private By linkZaKontakt = By.xpath("//a[contains(@href,'/mreza')]//span[contains(text(),'Kontakt')]");
+    private By kolekcije = By.cssSelector("a[aria-label^='Posetite kategoriju proizvoda']");
+    private By linkZaKontakt = By.xpath("//a[contains(@href,'/mreza')]//span[contains(text(),'Kontakt')]");
 
 
     public ProizvodiPage(WebDriver driver, Duration timeout) {
@@ -79,26 +79,46 @@ public class ProizvodiPage extends BasePage {
         }
 
     public boolean colectionPresenceCheck(String name) {
-        List<WebElement> allColections;
         int retries = 2;
 
         while (retries > 0) {
             try {
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-                allColections = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(kolekcije));
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
+                // Sačekaj da svi elementi budu prisutni u DOM-u
+                List<WebElement> allColections = wait.until(
+                        ExpectedConditions.presenceOfAllElementsLocatedBy(kolekcije)
+                );
+
+                // Malo čekanje da se tekst prikaže (važno u headless modu)
+                Thread.sleep(500);
+
+                System.out.println("=== DEBUG: Lista svih kolekcija ===");
                 for (WebElement k : allColections) {
-                    if (k.isDisplayed() && k.getText().toLowerCase().contains(name.toLowerCase())) {
+                    String text = k.getText().trim();
+                    System.out.println("👉 '" + text + "'");
+
+                    if (!text.isEmpty() && text.toLowerCase().contains(name.toLowerCase())) {
+                        System.out.println("✅ Kolekcija pronađena: " + text);
                         return true;
                     }
                 }
+                System.out.println("=== Kraj liste ===");
+
                 return false;
             } catch (StaleElementReferenceException | TimeoutException e) {
+                System.out.println("⚠️ Pokušaj ponovo... (preostalo pokušaja: " + (retries - 1) + ")");
                 retries--;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return false;
             }
         }
+
         return false;
     }
+
+
 
 
 
@@ -107,20 +127,9 @@ public class ProizvodiPage extends BasePage {
         openDropdownAndClick(linkZaKontakt, negaKose);
         }
 
-        public void pregledProizvodaGreenSunCare() {
+    public void pregledProizvodaGreenSunCare() {
             openDropdownAndClick(linkZaKontakt, greenSunCare);
         }
-    public static List<String> dohvatiSveKolekcije(WebDriver driver) {
-        List<String> kolekcije = new ArrayList<>();
 
-        List<WebElement> elements = driver.findElements(By.cssSelector("ul.products li.product-category"));
-
-        for (WebElement el : elements) {
-            String naziv = el.findElement(By.cssSelector("h2.woocommerce-loop-category__title")).getText();
-            kolekcije.add(naziv.trim());
-        }
-
-        return kolekcije;
-    }
 
 }
