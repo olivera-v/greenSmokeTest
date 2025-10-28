@@ -126,20 +126,25 @@ public void openDropdownAndClick(By mainElementLocator, By dropdownOptionLocator
     }
 
     //FRAMES
-    public void switchToNewlyOpenedTab () {
+    public String switchToNewlyOpenedTab() {
         String originalTab = driver.getWindowHandle();
 
         // Čekamo dok se ne pojavi više od 1 taba
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(d -> d.getWindowHandles().size() > 1);
 
-        // Prebacujemo se na tab koji nije originalni
-        for (String tabHandle : driver.getWindowHandles()) {
-            if (!tabHandle.equals(originalTab)) {
-                driver.switchTo().window(tabHandle);
-                break;
-            }
-        }
+        String newTabHandle = driver.getWindowHandles().stream()
+                .filter(handle -> !handle.equals(originalTab))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Novi tab nije pronađen"));
+
+        driver.switchTo().window(newTabHandle);
+
+        // Čekamo dok novi tab ne bude potpuno učitan
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(d -> ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
+
+        return newTabHandle;
     }
 
     //CHECK

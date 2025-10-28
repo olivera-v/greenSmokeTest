@@ -76,32 +76,59 @@ public class BasicFuncionalityTest extends BaseTest{
         conn.disconnect();
     }
 
-//    @Test
-//    public void unsuccessfulLogin(){
-//        driver.get("https://greenbsn.com/sr/");
-//        homePage.setLinkZaMojGreenKutak();
-//        homePage.switchToNewlyOpenedTab();
-//        new WebDriverWait(driver, Duration.ofSeconds(10))
-//                .until(ExpectedConditions.numberOfWindowsToBe(2));
-//        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
-//        mojGreenKutak.logovanje("nesto","nesto");
-//        Assert.assertTrue(driver.findElement(By.xpath("//input[@value='Prijava']")).isDisplayed());
-////        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
-//
-//    }
+    @Test
+    public void unsuccessfulLogin() {
+        homePage.setLinkZaMojGreenKutak();
 
-//    @Test
-//    public void successfulLogin(){
-//        driver.get("https://greenbsn.com/sr/");
-//        homePage.setLinkZaMojGreenKutak();
-//        homePage.switchToNewlyOpenedTab();
-//        new WebDriverWait(driver, Duration.ofSeconds(10))
-//                .until(ExpectedConditions.numberOfWindowsToBe(2));
-//        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
-//        mojGreenKutak.logovanje("1-0008826","olivera");
-//        Assert.assertTrue(driver.getCurrentUrl().contains("/myOrders.php"));
-////        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
-//
-//    }
+        // Prebacivanje na novi tab
+        homePage.switchToNewlyOpenedTab();
+
+        // Čekamo dok se ne pojave 2 taba
+        new WebDriverWait(driver, Duration.ofSeconds(45))
+                .until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        // Switch na drugi tab
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+
+        // ASSERT: proveravamo da smo na ispravnoj stranici
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue("Nismo prebačeni na Moj Green Kutak stranicu!",
+                currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
+
+        // Logovanje sa neispravnim kredencijalima
+        mojGreenKutak.logovanje("nesto", "nesto");
+
+        // ASSERT: dugme Prijava je prikazano
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
+            driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
+
+    }
+
+    @Test
+    public void successfulLogin(){
+        homePage.setLinkZaMojGreenKutak();
+
+        // Prebacivanje na novi tab
+        homePage.switchToNewlyOpenedTab();
+
+        // Čekamo dok se ne pojave 2 taba
+        new WebDriverWait(driver, Duration.ofSeconds(45))
+                .until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        // Switch na drugi tab
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+
+        // ASSERT: proveravamo da smo na ispravnoj stranici
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue("Nismo prebačeni na Moj Green Kutak stranicu!",
+                currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
+
+        mojGreenKutak.logovanje("1-0008826","olivera");
+        Assert.assertEquals("Nismo na očekivanoj login stranici!",
+                "https://my.greenbsn.com/myOrders.php",
+                driver.getCurrentUrl());
+        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
+
+    }
 
 }
