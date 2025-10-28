@@ -20,14 +20,23 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Google Chrome
-        uses: browser-actions/setup-chrome@v2
-        with:
-          chrome-version: 'latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
+          google-chrome --version
 
-      - name: Install matching ChromeDriver
-        uses: browser-actions/setup-chromedriver@v2
-        with:
-          version: 'latest'
+      - name: Install ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+          echo "Chrome version: $CHROME_VERSION"
+          CHROMEDRIVER_VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/
+          chromedriver --version
 
       - name: Cache Maven dependencies
         uses: actions/cache@v4
@@ -36,3 +45,17 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Run Maven tests
+        run: mvn clean test || echo "TESTS_FAILED=true" >> $GITHUB_ENV
+
+      - name: Show failed test summary (if any)
+        if: env.TESTS_FAILED == 'true'
+        run: |
+          echo "Test failure detected. Showing failed tests:"
+          grep -A5 -B2 '<<< FAILURE!' target/surefire-reports/*.txt || true
+          grep -A5 -B2 '<<< ERROR!' target/surefire-reports/*.txt || true
+
+      - name: Upload Surefire reports
+        if: always()
+        uses: actions/uplo
