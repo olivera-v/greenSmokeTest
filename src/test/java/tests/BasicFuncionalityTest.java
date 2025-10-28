@@ -106,12 +106,23 @@ public class BasicFuncionalityTest extends BaseTest{
 
     @Test
     public void successfulLogin(){
-        driver.get("https://greenbsn.com/sr/");
         homePage.setLinkZaMojGreenKutak();
+
+        // Prebacivanje na novi tab
         homePage.switchToNewlyOpenedTab();
+
+        // Čekamo dok se ne pojave 2 taba
         new WebDriverWait(driver, Duration.ofSeconds(30))
                 .until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        // Switch na drugi tab
         driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+
+        // ASSERT: proveravamo da smo na ispravnoj stranici
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue("Nismo prebačeni na Moj Green Kutak stranicu!",
+                currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
+
         mojGreenKutak.logovanje("1-0008826","olivera");
         Assert.assertTrue(driver.getCurrentUrl().contains("/myOrders.php"));
 //        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
