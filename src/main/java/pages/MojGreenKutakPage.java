@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -17,9 +19,14 @@ public class MojGreenKutakPage extends BasePage{
         super(driver, timeout);
     }
 
-    public void logovanje(String username, String password) {
-        driver.findElement(usernameField).sendKeys(username);
-        driver.findElement(passwordField).sendKeys(password);
+    public void logovanje(String korisnik, String lozinka) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
+        wait.until(ExpectedConditions.elementToBeClickable(prijavaButton));
+
+        driver.findElement(usernameField).sendKeys(korisnik);
+        driver.findElement(passwordField).sendKeys(lozinka);
         driver.findElement(prijavaButton).click();
     }
 
