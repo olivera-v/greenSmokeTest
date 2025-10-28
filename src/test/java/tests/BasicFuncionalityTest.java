@@ -124,7 +124,9 @@ public class BasicFuncionalityTest extends BaseTest{
                 currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
 
         mojGreenKutak.logovanje("1-0008826","olivera");
-        Assert.assertTrue(driver.getCurrentUrl().contains("/myOrders.php"));
+        Assert.assertEquals("Nismo na očekivanoj login stranici!",
+                "https://my.greenbsn.com/login.php",
+                driver.getCurrentUrl());
         driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
 
     }
