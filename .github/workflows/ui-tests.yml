@@ -19,15 +19,13 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Install Google Chrome
+      - name: Setup Google Chrome
         uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: 'latest'
 
-      - name: Install ChromeDriver
-        uses: browser-actions/setup-chromedriver@v2
-        with:
-          chromedriver-version: 'latest'
+      - name: Setup ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
 
       - name: Check Chrome versions
         run: |
