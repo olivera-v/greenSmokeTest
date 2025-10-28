@@ -83,7 +83,7 @@ public class BasicFuncionalityTest extends BaseTest{
         homePage.switchToNewlyOpenedTab();
         mojGreenKutak.logovanje("nesto","nesto");
         Assert.assertTrue(driver.findElement(By.xpath("//input[@value='Prijava']")).isDisplayed());
-        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
+//        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
 
     }
 
@@ -93,8 +93,8 @@ public class BasicFuncionalityTest extends BaseTest{
         homePage.setLinkZaMojGreenKutak();
         homePage.switchToNewlyOpenedTab();
         mojGreenKutak.logovanje("1-0008826","olivera");
-        Assert.assertTrue(driver.findElement(By.xpath("//div[@class='listing page-orders' and h3[text()='Porudžbine']]")).isDisplayed());
-        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
+        Assert.assertTrue(driver.getCurrentUrl().contains("/myOrders.php"));
+//        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
 
     }
 

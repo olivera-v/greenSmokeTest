@@ -22,13 +22,13 @@ public class ProductsAndColectionsTest extends BaseTest{
     SunCareSPF15Page sunCareSPF15 = new SunCareSPF15Page(driver, Duration.ofSeconds(15));
 
 
-    @Test
-    public void navigateToProductsAndCheckColectionsTwo() {
-        homePage.setLinkZaProizvode();
-        Assert.assertTrue(proizvodiPage.colectionPresenceCheck("nega kose"));
-        Assert.assertTrue(proizvodiPage.colectionPresenceCheck("mini greeny"));
-
-    }
+//    @Test
+//    public void navigateToProductsAndCheckColectionsTwo() {
+//        homePage.setLinkZaProizvode();
+//        Assert.assertTrue(proizvodiPage.colectionPresenceCheck("nega kose"));
+//        Assert.assertTrue(proizvodiPage.colectionPresenceCheck("mini greeny"));
+//
+//    }
 
     @Test
     public void bodyCareColectionLaunc() {

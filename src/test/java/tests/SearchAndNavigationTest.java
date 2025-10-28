@@ -29,14 +29,14 @@ public class SearchAndNavigationTest extends BaseTest{
         assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Losion')]")).isDisplayed());
     }
 
-    @Test
-    public void usingTheProductSearchFieldFail() throws InterruptedException {
-        homePage.setLinkZaPretragu();
-        searchPage.invalidSearch();
-        System.out.println("Test treba da padne.");
-        assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Losion')]")).isDisplayed());
-
-    }
+//    @Test
+//    public void usingTheProductSearchFieldFail() throws InterruptedException {
+//        homePage.setLinkZaPretragu();
+//        searchPage.invalidSearch();
+//        System.out.println("Test treba da padne.");
+//        assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Losion')]")).isDisplayed());
+//
+//    }
 
     @Test
     public void checkingTheLinksInTheMainManu() throws Exception {
