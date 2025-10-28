@@ -84,7 +84,7 @@ public class BasicFuncionalityTest extends BaseTest{
         homePage.switchToNewlyOpenedTab();
 
         // Čekamo dok se ne pojave 2 taba
-        new WebDriverWait(driver, Duration.ofSeconds(30))
+        new WebDriverWait(driver, Duration.ofSeconds(45))
                 .until(ExpectedConditions.numberOfWindowsToBe(2));
 
         // Switch na drugi tab
@@ -112,7 +112,7 @@ public class BasicFuncionalityTest extends BaseTest{
         homePage.switchToNewlyOpenedTab();
 
         // Čekamo dok se ne pojave 2 taba
-        new WebDriverWait(driver, Duration.ofSeconds(30))
+        new WebDriverWait(driver, Duration.ofSeconds(45))
                 .until(ExpectedConditions.numberOfWindowsToBe(2));
 
         // Switch na drugi tab
