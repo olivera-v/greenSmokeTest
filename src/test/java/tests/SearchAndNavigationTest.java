@@ -12,6 +12,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class SearchAndNavigationTest extends BaseTest{
@@ -29,14 +30,15 @@ public class SearchAndNavigationTest extends BaseTest{
         assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Losion')]")).isDisplayed());
     }
 
-//    @Test
-//    public void usingTheProductSearchFieldFail() throws InterruptedException {
-//        homePage.setLinkZaPretragu();
-//        searchPage.invalidSearch();
-//        System.out.println("Test treba da padne.");
-//        assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Losion')]")).isDisplayed());
-//
-//    }
+    @Test
+    public void usingTheProductSearchFieldFail() throws InterruptedException {
+        homePage.setLinkZaPretragu();
+        searchPage.pretragaPojma("lonsion");
+        List<WebElement> results = driver.findElements(By.xpath("//a[contains(text(),'Losion')]"));
+        assertFalse("Proizvod 'Losion' je pronađen, test treba da padne!",
+                results.size() > 0 && results.get(0).isDisplayed());
+
+    }
 
     @Test
     public void checkingTheLinksInTheMainManu() throws Exception {
