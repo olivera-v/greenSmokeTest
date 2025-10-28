@@ -99,7 +99,7 @@ public class BasicFuncionalityTest extends BaseTest{
         mojGreenKutak.logovanje("nesto", "nesto");
 
         // ASSERT: dugme Prijava je prikazano
-        Assert.assertTrue(driver.findElement(By.xpath("//input[@value='Prijava']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
     //        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
 
     }
