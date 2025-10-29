@@ -40,6 +40,11 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public void waitForURL(String expectedUrl) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+    }
+
     public void waitForPageToLoad() {
         wait.until(d -> js.executeScript("return document.readyState").equals("complete"));
     }

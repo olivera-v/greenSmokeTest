@@ -35,16 +35,14 @@ public class BasicFuncionalityTest extends BaseTest{
     @Test
     public void navigationToAboutCompany() {
         homePage.setLinkZaOKompaniji();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1/span[text()='Vizija']")));
+        homePage.waitForVisible(By.xpath("//h1/span[text()='Vizija']"));
         Assert.assertTrue(driver.findElement(By.xpath("//h1/span[text()='Vizija']")).isDisplayed());
     }
 
     @Test
     public void navigationToAboutProducts() {
         homePage.setLinkZaOProizvodima();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.urlToBe("https://greenbsn.com/sr/green/o-green-proizvodima/"));
+        basePage.waitForURL("https://greenbsn.com/sr/green/o-green-proizvodima/");
         Assert.assertTrue("Nije otvorena stranica O proizvodima.",
                 driver.getCurrentUrl().endsWith("sr/green/o-green-proizvodima/")
         );
@@ -53,8 +51,7 @@ public class BasicFuncionalityTest extends BaseTest{
     @Test
     public void navigationToCertificates() {
         homePage.setLinkZaSertifikate();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.urlToBe("https://greenbsn.com/sr/green/sertifikati/"));
+        basePage.waitForURL("https://greenbsn.com/sr/green/sertifikati/");
         Assert.assertTrue("Nije otvorena stranica Sertifikati.",
                     driver.getCurrentUrl().endsWith("/sr/green/sertifikati/")
             );
