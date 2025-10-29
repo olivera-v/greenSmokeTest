@@ -79,58 +79,27 @@ public class BasicFuncionalityTest extends BaseTest{
     @Test
     public void unsuccessfulLogin() {
         homePage.setLinkZaMojGreenKutak();
-
-        // Prebacivanje na novi tab
         homePage.switchToNewlyOpenedTab();
-
-        // Čekamo dok se ne pojave 2 taba
-        new WebDriverWait(driver, Duration.ofSeconds(45))
-                .until(ExpectedConditions.numberOfWindowsToBe(2));
-
-        // Switch na drugi tab
-        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
-
-        // ASSERT: proveravamo da smo na ispravnoj stranici
-        String currentUrl = driver.getCurrentUrl();
-        Assert.assertTrue("Nismo prebačeni na Moj Green Kutak stranicu!",
-                currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
-
-        // Logovanje sa neispravnim kredencijalima
+        homePage.waitingForTwoTabsToOpenAndSwitchToTheOtherOne();
+        homePage.checkingIfThePageIsOpen("/login.php");
         mojGreenKutak.logovanje("nesto", "nesto");
-
-        // ASSERT: Polje Username je prikazano
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
             driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
-
     }
 
     @Test
     public void successfulLogin() throws InterruptedException {
         homePage.setLinkZaMojGreenKutak();
-
-        // Prebacivanje na novi tab
         homePage.switchToNewlyOpenedTab();
-
-        // Čekamo dok se ne pojave 2 taba
-        new WebDriverWait(driver, Duration.ofSeconds(45))
-                .until(ExpectedConditions.numberOfWindowsToBe(2));
-
-        // Switch na drugi tab
-        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
-
-        // ASSERT: proveravamo da smo na ispravnoj stranici
-        String currentUrl = driver.getCurrentUrl();
-        Assert.assertTrue("Nismo prebačeni na Moj Green Kutak stranicu!",
-                currentUrl.contains("/login.php")); // ili deo URL-a koji je specifičan
-
+        homePage.switchToNewlyOpenedTab();
+        homePage.waitingForTwoTabsToOpenAndSwitchToTheOtherOne();
+        homePage.checkingIfThePageIsOpen("/login.php");
         mojGreenKutak.logovanje("1-0008826","olivera");
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.urlToBe("https://my.greenbsn.com/myOrders.php"));
+        mojGreenKutak.waitForPageToLoad();
         Assert.assertEquals("Nismo na očekivanoj login stranici!",
                 "https://my.greenbsn.com/myOrders.php",
                 driver.getCurrentUrl());
         driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
-
     }
 
 }

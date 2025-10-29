@@ -30,41 +30,7 @@ public class ProductsAndColectionsTest extends BaseTest{
     @Test
     public void navigateToProductsAndCheckColectionsThree() {
         homePage.hoverLinkZaProizvode();
-        try {
-            Thread.sleep(500); // kratko čekanje da se meni otvori
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Svi <a> unutar li sa klasom product_cat
-        List<WebElement> items = driver.findElements(By.cssSelector("li.menu-item-object-product_cat > a"));
-
-        // Set za deduplikaciju URL-ova
-        Set<String> seenHrefs = new HashSet<>();
-        // Lista za imena kolekcija bez duplikata
-        List<String> uniqueNames = new ArrayList<>();
-
-        System.out.println("=== Spisak kolekcija ===");
-        for (WebElement item : items) {
-            String name = item.findElement(By.tagName("span")).getText();
-            String href = item.getAttribute("href");
-
-            if (href == null || href.isEmpty()) continue;
-
-            // Preskoči duplikate
-            if (seenHrefs.contains(href)) continue;
-            seenHrefs.add(href);
-            uniqueNames.add(name);
-
-            // Izdvajanje dela između poslednje dve kose crte
-            String lastPart = "";
-            String[] parts = href.split("/");
-            lastPart = parts[parts.length - 1].isEmpty() ? parts[parts.length - 2] : parts[parts.length - 1];
-
-            System.out.println(name + " -> " + lastPart);
-        }
-        System.out.println("=== Kraj spiska ===");
-
+        List<String> uniqueNames = proizvodiPage.ispisiKolekcije();
         // Asertacija da ima tačno 10 jedinstvenih kolekcija
         Assert.assertTrue("Lista kolekcija nema tačno 10 proizvoda!", uniqueNames.size() == 10);
     }

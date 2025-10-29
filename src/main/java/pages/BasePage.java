@@ -39,10 +39,6 @@ public class BasePage {
     public WebElement waitForVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-    public void scrollIntoView(By locator) {
-        WebElement element = waitForVisible(locator);
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-    }
 
     public void waitForPageToLoad() {
         wait.until(d -> js.executeScript("return document.readyState").equals("complete"));
@@ -58,10 +54,17 @@ public class BasePage {
         );
     }
 
-    //ACTIONS - MOUSE
-    public void hover2(By locator) {
-        actions.moveToElement(waitForVisible(locator)).perform();
+    public void waitingForTwoTabsToOpenAndSwitchToTheOtherOne(){
+        // Čekamo dok se ne pojave 2 taba
+        new WebDriverWait(driver, Duration.ofSeconds(45))
+                .until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        // Switch na drugi tab
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+
     }
+
+    //ACTIONS - MOUSE
     public void hover(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
@@ -163,4 +166,11 @@ public void openDropdownAndClick(By mainElementLocator, By dropdownOptionLocator
 
         Assert.assertEquals("⚠️ JavaScript greške pronađene na stranici!", false, hasErrors);
     }
+
+    public void checkingIfThePageIsOpen (String partOfURL) {
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue("Nismo prebačeni na dobru stranicu!",
+                currentUrl.contains(partOfURL));
+    }
+
 }

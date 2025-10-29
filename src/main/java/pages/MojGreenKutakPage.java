@@ -25,8 +25,10 @@ public class MojGreenKutakPage extends BasePage{
         wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
         wait.until(ExpectedConditions.elementToBeClickable(prijavaButton));
 
-        driver.findElement(usernameField).sendKeys(korisnik);
-        driver.findElement(passwordField).sendKeys(lozinka);
+        type(usernameField, korisnik);
+        type(passwordField,lozinka);
+//        driver.findElement(usernameField).sendKeys(korisnik);
+//        driver.findElement(passwordField).sendKeys(lozinka);
         driver.findElement(prijavaButton).click();
     }
 

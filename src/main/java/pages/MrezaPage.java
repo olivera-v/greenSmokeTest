@@ -7,7 +7,6 @@ import java.time.Duration;
 
 public class MrezaPage extends BasePage{
 
-    public By title = By.xpath("//h2[normalize-space()='Green Business Solutions']/parent::div");
     public By inputField = By.id("email");
 
 

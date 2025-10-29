@@ -8,7 +8,6 @@ import java.time.Duration;
 public class SunCareProductsPage extends BasePage{
 
     public By mlekoSPF15 = By.xpath("(//*[@href=\"https://greenbsn.com/sr/proizvod/mleko-za-suncanje-spf-15/\"])[2]");
-    public By mlekoSPF30 = By.xpath("(//*[@href=\"https://greenbsn.com/sr/proizvod/mleko-za-suncanje-spf-30/\"])[2]");
     public By losionPosleSuncanja = By.xpath("(//*[@href=\"https://greenbsn.com/sr/proizvod/losion-posle-suncanja/\"])[2]");
 
 
