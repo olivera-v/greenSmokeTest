@@ -14,7 +14,7 @@ public class HomePage extends BasePage{
     private By linkZaOProizvodima = By.xpath("//a[.//span[normalize-space()='O Green proizvodima']]");
     private By linkZaSertifikate = By.cssSelector("a[href='https://greenbsn.com/sr/green/sertifikati/']");
     private By linkZaProizvode = By.id("nav-menu-item-892");
-        private By linkZaKontakt = By.xpath("//a[contains(@href,'/mreza')]//span[contains(text(),'Kontakt')]");
+    private By linkZaKontakt = By.xpath("//a[contains(@href,'/mreza')]//span[contains(text(),'Kontakt')]");
 
     public HomePage(WebDriver driver, Duration timeout) {
         super(driver, timeout);

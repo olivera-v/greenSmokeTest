@@ -24,11 +24,8 @@ public class MojGreenKutakPage extends BasePage{
         wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
         wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
         wait.until(ExpectedConditions.elementToBeClickable(prijavaButton));
-
         type(usernameField, korisnik);
         type(passwordField,lozinka);
-//        driver.findElement(usernameField).sendKeys(korisnik);
-//        driver.findElement(passwordField).sendKeys(lozinka);
         driver.findElement(prijavaButton).click();
     }
 
@@ -36,28 +33,4 @@ public class MojGreenKutakPage extends BasePage{
         driver.findElement(languageChangeBtn).click();
         moveToAndClick(englishLng);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

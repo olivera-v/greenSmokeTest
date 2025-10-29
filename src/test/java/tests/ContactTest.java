@@ -20,7 +20,7 @@ public class ContactTest extends BaseTest{
     public void openingContactPage() throws InterruptedException {
         homePage.setLinkZaKontakt();
         mrezaPage.scrollToBottom();
-        WebElement emailInput = mrezaPage.waitForVisible(mrezaPage.inputField); // By locator za email input
+        WebElement emailInput = mrezaPage.waitForVisible(mrezaPage.inputField);
         Assert.assertTrue(emailInput.isDisplayed());
     }
 

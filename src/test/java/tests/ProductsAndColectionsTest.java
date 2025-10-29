@@ -3,20 +3,14 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 import pages.ProizvodiPage;
 import pages.SunCareProductsPage;
 import pages.SunCareSPF15Page;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class ProductsAndColectionsTest extends BaseTest{
 
@@ -31,7 +25,6 @@ public class ProductsAndColectionsTest extends BaseTest{
     public void navigateToProductsAndCheckColectionsThree() {
         homePage.hoverLinkZaProizvode();
         List<String> uniqueNames = proizvodiPage.ispisiKolekcije();
-        // Asertacija da ima tačno 10 jedinstvenih kolekcija
         Assert.assertTrue("Lista kolekcija nema tačno 10 proizvoda!", uniqueNames.size() == 10);
     }
 

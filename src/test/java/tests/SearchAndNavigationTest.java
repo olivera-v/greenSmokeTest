@@ -37,6 +37,7 @@ public class SearchAndNavigationTest extends BaseTest{
         List<WebElement> results = driver.findElements(By.xpath("//a[contains(text(),'Losion')]"));
         assertFalse("Proizvod 'Losion' je pronađen, test treba da padne!",
                 results.size() > 0 && results.get(0).isDisplayed());
+        assertTrue(driver.findElement(By.xpath("//p[text()='No posts were found.']")).isDisplayed());
 
     }
 

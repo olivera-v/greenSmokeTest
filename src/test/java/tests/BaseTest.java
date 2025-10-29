@@ -1,6 +1,5 @@
 package tests;
 
-import com.github.javafaker.Faker;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,14 +10,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import pages.BasePage;
 
 import java.time.Duration;
-import java.util.UUID;
 
 
 public class BaseTest {
 
 protected static WebDriver driver;
 protected static BasePage basePage;
-Faker faker = new Faker();
 
 @BeforeClass
 public static void beforeAll() {
