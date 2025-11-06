@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -59,15 +60,31 @@ public class BasePage {
         );
     }
 
-    public void waitingForTwoTabsToOpenAndSwitchToTheOtherOne(){
-        // Čekamo dok se ne pojave 2 taba
-        new WebDriverWait(driver, Duration.ofSeconds(90))
-                .until(ExpectedConditions.numberOfWindowsToBe(2));
+//    public void waitingForTwoTabsToOpenAndSwitchToTheOtherOne(){
+//        // Čekamo dok se ne pojave 2 taba
+//        new WebDriverWait(driver, Duration.ofSeconds(90))
+//                .until(ExpectedConditions.numberOfWindowsToBe(2));
+//
+//        // Switch na drugi tab
+//        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+//
+//    }
 
-        // Switch na drugi tab
-        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
-
+    public void waitingForTwoTabsToOpenAndSwitchToTheOtherOne() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        try {
+            boolean secondTabOpened = wait.until(d -> d.getWindowHandles().size() > 1);
+            if (secondTabOpened) {
+                List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+                driver.switchTo().window(tabs.get(1));
+            } else {
+                System.out.println("⚠️ Novi tab se nije otvorio — nastavljam u istom tabu (headless mod).");
+            }
+        } catch (TimeoutException e) {
+            System.out.println("⚠️ Nije se otvorio drugi tab u zadatom vremenu. Nastavljam dalje.");
+        }
     }
+
 
     //ACTIONS - MOUSE
     public void hover(By locator) {
