@@ -80,7 +80,10 @@ public class BasicFuncionalityTest extends BaseTest{
         homePage.waitingForTwoTabsToOpenAndSwitchToTheOtherOne();
         homePage.checkingIfThePageIsOpen("/login.php");
         mojGreenKutak.logovanje("nesto", "nesto");
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+        Assert.assertTrue(usernameField.isDisplayed());
+//        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
             driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
     }
 
@@ -94,6 +97,8 @@ public class BasicFuncionalityTest extends BaseTest{
         homePage.checkingIfThePageIsOpen("/login.php");
         mojGreenKutak.logovanje("1-0008826","olivera");
         mojGreenKutak.waitForPageToLoad();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("https://my.greenbsn.com/myOrders.php"));
         Assert.assertEquals("Nismo na očekivanoj login stranici!",
                 "https://my.greenbsn.com/myOrders.php",
                 driver.getCurrentUrl());
