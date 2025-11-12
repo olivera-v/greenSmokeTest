@@ -14,22 +14,15 @@ public class TechnikalChecksTest extends BaseTest{
 
     @Test
     public void testLoadTime() {
-        long startTime = System.currentTimeMillis();  // početak merenja vremena
-
-        driver.get("https://greenbsn.com/sr/"); // otvaranje stranice
-
-        // čekaj dok se stranica potpuno ne učita
+        long startTime = System.currentTimeMillis();
+        driver.get("https://greenbsn.com/sr/");
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState").equals("complete"));
-
-        long endTime = System.currentTimeMillis(); // kraj merenja
+        long endTime = System.currentTimeMillis();
         long loadTime = endTime - startTime;
-
-        System.out.println("Vreme učitavanja stranice: " + loadTime + " ms");
-
-        // Asertacija — očekujemo manje od 5000 ms (5 sekundi)
-        Assert.assertTrue("Stranica se učitala presporo: " + loadTime + " ms", loadTime < 5000);
+        System.out.println("Page load time: " + loadTime + " ms");
+        Assert.assertTrue("The page loaded too slowly.: " + loadTime + " ms", loadTime < 5000);
     }
 
     @Test

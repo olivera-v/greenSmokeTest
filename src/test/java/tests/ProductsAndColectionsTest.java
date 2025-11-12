@@ -25,7 +25,7 @@ public class ProductsAndColectionsTest extends BaseTest{
     public void navigateToProductsAndCheckColectionsThree() {
         homePage.hoverLinkZaProizvode();
         List<String> uniqueNames = proizvodiPage.ispisiKolekcije();
-        Assert.assertTrue("Lista kolekcija nema tačno 10 proizvoda!", uniqueNames.size() == 10);
+        Assert.assertTrue("The collection list does not have exactly 10 products!", uniqueNames.size() == 10);
     }
 
     @Test

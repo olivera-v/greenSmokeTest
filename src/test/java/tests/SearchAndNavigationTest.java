@@ -35,7 +35,7 @@ public class SearchAndNavigationTest extends BaseTest{
         homePage.setLinkZaPretragu();
         searchPage.pretragaPojma("lonsion");
         List<WebElement> results = driver.findElements(By.xpath("//a[contains(text(),'Losion')]"));
-        assertFalse("Proizvod 'Losion' je pronađen, test treba da padne!",
+        assertFalse("The product 'Losion' was found, the test should fail!",
                 results.size() > 0 && results.get(0).isDisplayed());
         assertTrue(driver.findElement(By.xpath("//p[text()='No posts were found.']")).isDisplayed());
 
@@ -53,7 +53,7 @@ public class SearchAndNavigationTest extends BaseTest{
             c.setRequestMethod("HEAD");
             c.connect();
             int kod = c.getResponseCode();
-            assertTrue("Neispravan link: " + href + " (kod: " + kod + ")", kod < 400);
+            assertTrue("Broken link: " + href + " (code: " + kod + ")", kod < 400);
         }
     }
 

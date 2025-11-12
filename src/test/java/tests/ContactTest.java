@@ -37,7 +37,7 @@ public class ContactTest extends BaseTest{
     public void checkingTheFunctionalityOfLinks() {
         homePage.hoverLinkZaKontakt();
         homePage.selectNSFromDropdownMenu();
-        Assert.assertTrue("Facebook link nije ispravan!", mrezaNSPage.verifyFacebookLink());
-        Assert.assertTrue("Email link nije ispravan!", mrezaNSPage.verifyEmailLink());
+        Assert.assertTrue("The Facebook link is not valid!", mrezaNSPage.verifyFacebookLink());
+        Assert.assertTrue("The email link is not valid!", mrezaNSPage.verifyEmailLink());
     }
 }

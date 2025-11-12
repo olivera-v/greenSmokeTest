@@ -43,7 +43,7 @@ public class BasicFuncionalityTest extends BaseTest{
     public void navigationToAboutProducts() {
         homePage.setLinkZaOProizvodima();
         basePage.waitForURL("https://greenbsn.com/sr/green/o-green-proizvodima/");
-        Assert.assertTrue("Nije otvorena stranica O proizvodima.",
+        Assert.assertTrue("The About Products page is not open.",
                 driver.getCurrentUrl().endsWith("sr/green/o-green-proizvodima/")
         );
     }
@@ -52,7 +52,7 @@ public class BasicFuncionalityTest extends BaseTest{
     public void navigationToCertificates() {
         homePage.setLinkZaSertifikate();
         basePage.waitForURL("https://greenbsn.com/sr/green/sertifikati/");
-        Assert.assertTrue("Nije otvorena stranica Sertifikati.",
+        Assert.assertTrue("The Certificates page is not open.",
                     driver.getCurrentUrl().endsWith("/sr/green/sertifikati/")
             );
         }
@@ -62,13 +62,13 @@ public class BasicFuncionalityTest extends BaseTest{
     @Test
     public void verifyHTTPSandSSL() throws Exception {
         String url = driver.getCurrentUrl();
-        assertTrue("Stranica ne koristi HTTPS!", url.startsWith("https://"));
+        assertTrue("The site does not use HTTPS!", url.startsWith("https://"));
 
         HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
         conn.connect();
 
         Certificate[] certs = conn.getServerCertificates();
-        assertTrue("Sertifikat nije prisutan!", certs.length > 0);
+        assertTrue("Certificate not present!", certs.length > 0);
 
         conn.disconnect();
     }
@@ -88,21 +88,21 @@ public class BasicFuncionalityTest extends BaseTest{
     }
 
 
-    @Test
-    public void successfulLogin() throws InterruptedException {
-        homePage.setLinkZaMojGreenKutak();
-        homePage.switchToNewlyOpenedTab();
-        homePage.switchToNewlyOpenedTab();
-        homePage.waitingForTwoTabsToOpenAndSwitchToTheOtherOne();
-        homePage.checkingIfThePageIsOpen("/login.php");
-        mojGreenKutak.logovanje("1-0008826","olivera");
-        mojGreenKutak.waitForPageToLoad();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlToBe("https://my.greenbsn.com/myOrders.php"));
-        Assert.assertEquals("Nismo na očekivanoj login stranici!",
-                "https://my.greenbsn.com/myOrders.php",
-                driver.getCurrentUrl());
-        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
-    }
+//    @Test
+//    public void successfulLogin() throws InterruptedException {
+//        homePage.setLinkZaMojGreenKutak();
+//        homePage.switchToNewlyOpenedTab();
+//        homePage.switchToNewlyOpenedTab();
+//        homePage.waitingForTwoTabsToOpenAndSwitchToTheOtherOne();
+//        homePage.checkingIfThePageIsOpen("/login.php");
+//        mojGreenKutak.logovanje("??????","?????"); // valid credentials should be entered
+//        mojGreenKutak.waitForPageToLoad();
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.urlToBe("https://my.greenbsn.com/myOrders.php"));
+//        Assert.assertEquals("Nismo na očekivanoj login stranici!",
+//                "https://my.greenbsn.com/myOrders.php",
+//                driver.getCurrentUrl());
+//        driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
+//    }
 
 }
