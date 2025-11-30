@@ -50,6 +50,7 @@ public class BasePage {
         wait.until(d -> js.executeScript("return document.readyState").equals("complete"));
     }
 
+
     public void click(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }

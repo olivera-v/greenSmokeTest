@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -17,17 +19,26 @@ public class SunCareSPF15Page extends BasePage{
     }
 
     public String getTitleText() {
-        WebElement element = driver.findElement(title);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(title)
+        );
         return element.getText().trim();
     }
 
     public String getPriceValue() {
-        WebElement element = driver.findElement(price);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(price)
+        );
         return element.getText().trim();
     }
 
     public String getDescriptionText() {
-        WebElement element = driver.findElement(description);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(description)
+        );
         return element.getText().trim();
     }
 

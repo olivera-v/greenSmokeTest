@@ -83,7 +83,7 @@ public class BasicFuncionalityTest extends BaseTest{
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
         Assert.assertTrue(usernameField.isDisplayed());
-//        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"username\"]")).isDisplayed());
+//        Assert.assertTrue(driver.findElement2(By.xpath("//*[@id=\"username\"]")).isDisplayed());
             driver.switchTo().window(driver.getWindowHandles().stream().filter(h -> !h.equals(driver.getWindowHandle())).findFirst().orElse(driver.getWindowHandle())).close(); driver.switchTo().window(driver.getWindowHandles().iterator().next());
     }
 
